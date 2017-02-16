@@ -34,7 +34,7 @@ class MRDParserTest extends FunSuite with Matchers with GivenWhenThen {
     Given("we have valid identity card data")
 
     val sampleData =
-      """I<HUF592492SA<7<<<<<<<<<<<<<<<
+      """I<HUF592492SB<0<<<<<<<<<<<<<<<
         |7906075M2405296HUF<<<<<<<<<<<4
         |LACHATA<<KRISZTIAN<<<<<<<<<<<<""".stripMargin
 
@@ -44,7 +44,7 @@ class MRDParserTest extends FunSuite with Matchers with GivenWhenThen {
 
     Then("we should get proper content")
 
-    parsedData.require.value should be(IdentityCardMetadata("I", "", "HUF", "592492SA", LocalDate
+    parsedData.require.value should be(IdentityCardMetadata("I", "", "HUF", "592492SB", LocalDate
       .parse("1979-06-07"), Male, LocalDate.parse("2024-05-29"), "HUF", "4", "LACHATA  KRISZTIAN"))
   }
 
