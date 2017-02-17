@@ -19,7 +19,7 @@ My solution was nearly ready but one feature was missing. I wanted to use *hlist
 I was very dissappointed. Then I was attending [Miles's presentation](https://skillsmatter.com/skillscasts/9043-typelevel-scala-rebooted) at the ScalaX 2016 and I saw the light at the end of the tunnel. I didn't know that time if it was really the end of the tunnel or just a fast train runnig towards me. I thought that instead of using Lightbend Scala may be I have to give a try to Typelevel Scala. It ment to contain some fixes and improvements on top of Lightbend Scala. 
 Unfortunately it couldn't solve the issue. For the real break through I had to wait till last week. 
 
-![Alt](docs/tweet.png "Tweet")
+![Alt](docs/tweet.png?raw=true "Tweet")
 
 I had high expectations against Typelevel Scala 2.12.1 fast implicit resolution. I felt that this time it will be different! And it turned out that it helped a lot. **The compilation time droped from ~6hours to 3 minutes although the cpu still behaves like a heater** :)
 
@@ -139,6 +139,7 @@ Apart from my core parser implementation both solutions have roughly the same si
 * **Harder to extend and less generic**
 * However my solution **supports arbitrary case class field ordering** as long as the parser tag has the same name! 
 * **case class may have less fields than parsers** in your MRD format HList. If a parser tag doesn't exists in the case class field name list it will be just simple removed. 
+
 ###Scodec solution
 * **Loads of different combinators** to deal with data encoding. I really like the **checksummed** encoder. It is really easy and convenient to use
 * **Easily extendable**
