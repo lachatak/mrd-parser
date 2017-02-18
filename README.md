@@ -148,5 +148,7 @@ Apart from my core parser implementation, both solutions have roughly the same s
 * **Loads of different combinators** to deal with data encoding. I really like the **checksummed** encoder. It is really easy and convenient to use
 * **Easily extendable**
 * It would be amazing to use encoder names to bind the encoded value to the case class field via name. With this solution we could have arbitrary case class field orders!
+
+*My personal verdict is that for a production code I would chose scodec over my very own parser implementation although it was a fun to play with case class Generics from Shapeless. It is hard to beat Scodec’s nice DSL and huge support of different type of codecs. However it would be good to be able to use tagging to bind encoder to a case class field without forcing the same order in the case class.*
  
 **For more details see the implementation and the test classes!!** 
