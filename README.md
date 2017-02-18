@@ -3,6 +3,7 @@ Some while ago I came across **Typelevel Programming** and I wanted to know more
 
 * [Type-Level Programming in Scala](https://apocalisp.wordpress.com/2010/06/08/type-level-programming-in-scala/) 
 * [Type Level Programming in Scala step by step](http://gigiigig.github.io/tlp-step-by-step/introduction.html)
+* [Dependent Types slides](http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/) and [video](https://www.youtube.com/watch?v=cW4cmSWOSVA)
 
 I especially enjoyed the second one since it covered more concepts from the area with easily understandable examples. This was the first time I had an **AHHHAAAA!!** feeling with the [Aux pattern](http://gigiigig.github.io/posts/2015/09/13/aux-pattern.html)
 
