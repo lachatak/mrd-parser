@@ -27,7 +27,7 @@ package object mrdscodec {
       val decodedResult = localDateCodec.decode(bits)
       val result = decodedResult.flatMap { res =>
         Try(LocalDate.parse(res.value, dateTimeFormatter)) match {
-          case Success(locatDate) => Attempt.successful(DecodeResult(if (locatDate.getYear > 2050) locatDate.minusYears(100) else locatDate, res.remainder))
+          case Success(localDate) => Attempt.successful(DecodeResult(if (localDate.getYear > 2050) localDate.minusYears(100) else localDate, res.remainder))
           case Failure(error) => Attempt.failure(Err(error.getMessage))
         }
       }
