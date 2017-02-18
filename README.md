@@ -28,8 +28,8 @@ I had high expectations against Typelevel Scala 2.12.1 fast implicit resolution.
 
 So now I have reached the point where I can publish my MRD solution based on Shapeless. 
 
-##Custom Typesafe MRD parser
-Typesafe parser of the data encoded on machine readable passport.
+##Custom Typesafe MRD parser with Shapeless
+Typesafe parser of the data encoded on [machine readable passport](https://en.wikipedia.org/wiki/Machine-readable_passport).
 
 The format of data available on machine readable travel documents is
 available on Wikipedia. 
