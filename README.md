@@ -11,20 +11,22 @@ Meanwhile I was exploring the subject I felt like more and more trace leads back
 
 Then a game changer book was published by Dave Gurnell and Underscore about Shapeless: [The Type Astronaut's Guide to Shapeless Book](http://underscore.io/books/shapeless-guide/)  
 
-This was the second time I had **AHHHAAAA!** feeling and step by step I started to feel that this is something I might be able to use even in my daily job confidently - assuming my team mates are not commiting suicide immediately after seeing my PR.
+This was the second time I had **AHHHAAAA!** feeling and step by step I started to feel that this is something I might be able to use even in my daily job confidently - assuming my team mates are not committing suicide immediately after seeing my PR.
 
 Armed with my new book/knowledge I started to think about a potential pet project what I can use to sink my teeth into the topic more. One of my colleagues - Tomek - suggested me to play with the [machine readable travel documents format](https://en.wikipedia.org/wiki/Machine-readable_passport) and try to write a parser for it. It seemed to be a brilliant idea. I literally spent days and nights to come up with a reasonable solution. It gave me good opportunity to pull in [Cats](http://typelevel.org/cats/) as well to start get used to it in this post scalaz world. 
  
 My solution was nearly ready but one feature was missing. I wanted to use *hlist.Intersection* to remove items from my generic representation before it is converted to the final case class. The modification was a minor change but the impact was tremendous. My test class didn't seem to compile. I mean **there wasn't any error from the compiler but instead it was compiling the test class for hours turning my Mac into a central heating system**... I was experimenting with the solution and the number of fields in the target case class and it turned out that every additional field roughly doubles the compile time. *By the time I had 5 fields it was already 9-10 minutes!! And I needed 11 fields*... Good luck! 
 
-I was very dissappointed. Then I was attending [Miles's presentation](https://skillsmatter.com/skillscasts/9043-typelevel-scala-rebooted) at the ScalaX 2016 and I saw the light at the end of the tunnel. I didn't know that time if it was really the end of the tunnel or just a fast train runnig towards me. I thought that instead of using Lightbend Scala may be I have to give a try to Typelevel Scala. It ment to contain some fixes and improvements on top of Lightbend Scala. 
+I was very disappointed. Then I was attending [Miles's presentation](https://skillsmatter.com/skillscasts/9043-typelevel-scala-rebooted) at the [Scala eXchange 2016](http://waytothepiratecove.blogspot.co.uk/2016/12/scala-exchange-2016.html) and I saw the light at the end of the tunnel. I didn't know that time if it was really the end of the tunnel or just a fast train running towards me. I thought that instead of using Lightbend Scala may be I have to give a try to Typelevel Scala. It meant to contain some fixes and improvements on top of Lightbend Scala. 
 Unfortunately it couldn't solve the issue. For the real break through I had to wait till last week. 
 
 <img src="docs/tweet.png" width="600px"/>
 
-I had high expectations against Typelevel Scala 2.12.1 fast implicit resolution. I felt that this time it will be different! And it turned out that it helped a lot. **The compilation time droped from ~6hours to 3 minutes although the cpu still behaves like a heater** :)
+I had high expectations against Typelevel Scala 2.12.1 fast implicit resolution. I felt that this time it will be different! And it turned out that it helped a lot. **The compilation time dropped from ~6hours to 3 minutes although the cpu still behaves like a heater** :)
 
-So now I have riched the point where I can publish my MRD solution based on Shapless. 
+<img src="docs/compiletime.png" width="500px"/>
+
+So now I have reached the point where I can publish my MRD solution based on Shapeless. 
 
 ##Custom Typesafe MRD parser
 Typesafe parser of the data encoded on machine readable passport.
@@ -91,6 +93,7 @@ Recently I started to play with [scodec](https://github.com/scodec/scodec) in my
 ##Scodec MRD encoder
 Sample code:
 ```scala
+val sampleData =
       """P<HUNLACHATA<<KRISZTIAN<<<<<<<<<<<<<<<<<<<<<
         |HG45654029HUN7906075M2508201<<<<<<<<<<<<<<04""".stripMargin
     
