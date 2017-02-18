@@ -15,7 +15,7 @@ This was the second time I had **AHHHAAAA!** feeling and step by step I started 
 
 Armed with my new book/knowledge I started to think about a potential pet project what I can use to sink my teeth into the topic more. One of my colleagues - Tomek - suggested me to play with the [machine readable travel documents format](https://en.wikipedia.org/wiki/Machine-readable_passport) and try to write a parser for it. It seemed to be a brilliant idea. I literally spent days and nights to come up with a reasonable solution. It gave me good opportunity to pull in [Cats](http://typelevel.org/cats/) as well to start get used to it in this post scalaz world. 
  
-My solution was nearly ready but one feature was missing. I wanted to use *hlist.Intersection* to remove items from my generic representation before it is converted to the final case class. The modification was a minor change but the impact was tremendous. My test class didn't seem to compile. I mean **there wasn't any error from the compiler but instead it was compiling the test class for hours turning my Mac to a central heating system**... I was experimenting with the solution and the number of fields in the target case class and it turned out that every additional field roughly doubles the compile time. *By the time I had 5 fields it was already 9-10 minutes!! And I needed 11 fields*... Good luck! 
+My solution was nearly ready but one feature was missing. I wanted to use *hlist.Intersection* to remove items from my generic representation before it is converted to the final case class. The modification was a minor change but the impact was tremendous. My test class didn't seem to compile. I mean **there wasn't any error from the compiler but instead it was compiling the test class for hours turning my Mac into a central heating system**... I was experimenting with the solution and the number of fields in the target case class and it turned out that every additional field roughly doubles the compile time. *By the time I had 5 fields it was already 9-10 minutes!! And I needed 11 fields*... Good luck! 
 
 I was very dissappointed. Then I was attending [Miles's presentation](https://skillsmatter.com/skillscasts/9043-typelevel-scala-rebooted) at the ScalaX 2016 and I saw the light at the end of the tunnel. I didn't know that time if it was really the end of the tunnel or just a fast train runnig towards me. I thought that instead of using Lightbend Scala may be I have to give a try to Typelevel Scala. It ment to contain some fixes and improvements on top of Lightbend Scala. 
 Unfortunately it couldn't solve the issue. For the real break through I had to wait till last week. 
@@ -72,7 +72,7 @@ println(sampleData.parseTo[PassportMetadata](passportFormat))
 
 ###Usage
 1. **Define your case class** what serves as a target container for the parser. In this case it is *PassportMetadata*
-2. Use **predefined field parsers** to define your MRD format by **creating an HList containing parsers in the proper document field order**. Tag parsers based on its target field name in the case class:
+2. Use **predefined field parsers** to define your MRD format by **creating an HList with parsers in the proper document field order**. Tag parsers based on its target field name in the case class:
 
 	* **StringField** which can extract an arbitrary long string from an MRD document
 	* **DateField** which can be used to extract dates

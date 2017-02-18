@@ -20,21 +20,9 @@ package object mrdshapeless {
 
     protected def validateChecksum(text: String, checksum: Char): Validation[String] = {
 
-      def mapChar(input: Char): Int = {
-        input match {
-          case x if x >= 'A' && x <= 'Z' => x - 'A' + 10
-          case x if x >= '0' && x <= '9' => x - '0'
-          case ' ' => 0
-        }
-      }
+      val generatedChecksum = CheckSum.checksum(text)
 
-      val generatedChecksum = text.
-        map(mapChar).
-        zip(Stream.continually(Seq(7, 3, 1).toStream).flatten).
-        map(x => x._1 * x._2).
-        sum % 10
-
-      if (generatedChecksum == mapChar(checksum)) {
+      if (generatedChecksum == CheckSum.mapChar(checksum)) {
         valid(text)
       } else {
         invalidNel(ValidationError("Checksum", s"Invalid checksum '$checksum' for '$text'"))

@@ -52,4 +52,24 @@ package object mrd {
                                   nationality: String,
                                   checksum: String,
                                   surname: String)
+
+  object CheckSum {
+
+    def mapChar(input: Char): Int = {
+      input match {
+        case x if x >= 'A' && x <= 'Z' => x - 'A' + 10
+        case x if x >= '0' && x <= '9' => x - '0'
+        case x if x == '<' || x == ' ' => 0
+        case _ => 0
+      }
+    }
+
+    def checksum(text: String): Int = text
+      .map(mapChar)
+      .zip(Stream.continually(Seq(7, 3, 1).toStream).flatten)
+      .collect { case (x, y) => x * y }
+      .sum % 10
+
+  }
+
 }

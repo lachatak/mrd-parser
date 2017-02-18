@@ -25,7 +25,7 @@ package object mrdscodec {
 
     override def decode(bits: BitVector): Attempt[DecodeResult[LocalDate]] = {
       val decodedResult = localDateCodec.decode(bits)
-      val result = decodedResult.flatMap{ res =>
+      val result = decodedResult.flatMap { res =>
         Try(LocalDate.parse(res.value, dateTimeFormatter)) match {
           case Success(locatDate) => Attempt.successful(DecodeResult(if (locatDate.getYear > 2050) locatDate.minusYears(100) else locatDate, res.remainder))
           case Failure(error) => Attempt.failure(Err(error.getMessage))
@@ -76,23 +76,13 @@ package object mrdscodec {
 
     val valueDecoder = ascii
 
-    def mapChar(input: Char): Int = {
-      input match {
-        case x if x >= 'A' && x <= 'Z' => x - 'A' + 10
-        case x if x >= '0' && x <= '9' => x - '0'
-        case x if x == '<' || x == ' ' => 0
-        case x => println(s"-$x-"); 0
-      }
-    }
+    val checkSum = for {
+      decodedValue <- valueDecoder.decode(input)
+      calculatedValue = CheckSum.checksum(decodedValue.value)
+      checkSum <- valueDecoder.encode(calculatedValue.toString)
+    } yield checkSum
 
-    val decodedValue = valueDecoder.decode(input).require.value
-    val calculatedValue = decodedValue
-      .map(mapChar)
-      .zip(Stream.continually(Seq(7, 3, 1).toStream).flatten)
-      .map(x => x._1 * x._2)
-      .sum % 10
-
-    valueDecoder.encode(calculatedValue.toString).require
+    checkSum.require
   }
 
   val passportMetadataCodec: Codec[PassportMetadata] = (
