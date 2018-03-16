@@ -1,4 +1,4 @@
-#Playing with Typelevel Programming
+# Playing with Typelevel Programming
 Some while ago I came across **Typelevel Programming** and I wanted to know more about it. I tried to dig deeper in the subject and I found a number of interesting articles dealing with the topic:
 
 * [Type-Level Programming in Scala](https://apocalisp.wordpress.com/2010/06/08/type-level-programming-in-scala/) 
@@ -28,7 +28,7 @@ I had high expectations against Typelevel Scala 2.12.1 fast implicit resolution.
 
 So now I have reached the point where I can publish my MRD solution based on Shapeless. 
 
-##Custom Typesafe MRD parser with Shapeless
+## Custom Typesafe MRD parser with Shapeless
 Typesafe parser of the data encoded on [machine readable passport](https://en.wikipedia.org/wiki/Machine-readable_passport).
 
 The format of data available on machine readable travel documents is
@@ -72,7 +72,7 @@ val passportFormat =
 println(sampleData.parseTo[PassportMetadata](passportFormat))
 ```    
 
-###Usage
+### Usage
 1. **Define your case class** what serves as a target container for the parser. In this case it is *PassportMetadata*
 2. Use **predefined field parsers** to define your MRD format by **creating an HList with parsers in the proper document field order**. Tag parsers based on its target field name in the case class:
 
@@ -88,7 +88,7 @@ Please also note that **the case class field order doesn't matter as long as the
 #Custom Typesafe MRD parser vs Scodec MRD encoder
 Recently I started to play with [scodec](https://github.com/scodec/scodec) in my other pet project. After I saw my parser working with 2.12.1 Typelevel compiler I thought it would be cool to implement the same MRD parser with scodec as well to see how my solution works compared to a mature binary parser scala library and vica versa. 
 
-**Bear in mind that there is more than likely a better and nicer solutions for both of the implementations. If you have suggestions how I could improve them feel free to share!**
+** Bear in mind that there is more than likely a better and nicer solutions for both of the implementations. If you have suggestions how I could improve them feel free to share!**
  
 ##Scodec MRD encoder
 Sample code:
@@ -125,7 +125,7 @@ case class PassportMetadata(documentType: String,
     
     passportMetadataCodec.decode(BitVector(sampleData.filterNot(_.isWhitespace).getBytes()))
 ```
-###Usage
+### Usage
 1. **Define your case class** what serves as a target container for the parser. In this case it is *PassportMetadata*
 2. Use **predefined scodec encoders/combinators** to define your MRD format.
 3. Run the encoder against a given string
@@ -133,18 +133,18 @@ case class PassportMetadata(documentType: String,
 Please note that **you can have less field in your target case class than encoder if you use Unit encoders like ignore**. Adding name to the encoder is not directly binding the encoded value to a case class field. It is just for helping the user in case of encoding error.  
 Please also note that **the case class field order does matter**!!
 
-##Conclusion
+## Conclusion
 Apart from my core parser implementation, both solutions have roughly the same size of domain related code:
 * [Shapeless](src/main/scala/org/kaloz/mrd/mrdshapeless)
 * [Scodec](src/main/scala/org/kaloz/mrd/mrdscodec)
 
-###Custom solution
+### Custom solution
 * My solution **has just a handful of parsers**
 * **Harder to extend and less generic**
 * However my solution **supports arbitrary case class field ordering** as long as the parser tag has the same name! 
 * **case class may have less fields than parsers** in your MRD format HList. If a parser tag doesn't exists in the case class field name list it will be just simple removed. 
 
-###Scodec solution
+### Scodec solution
 * **Loads of different combinators** to deal with data encoding. I really like the **checksummed** encoder. It is really easy and convenient to use
 * **Easily extendable**
 * It would be amazing to use encoder names to bind the encoded value to the case class field via name. With this solution we could have arbitrary case class field orders!
