@@ -85,12 +85,12 @@ println(sampleData.parseTo[PassportMetadata](passportFormat))
 Please note that **you can have less field in your target case class than parser in your MRD format HList**. If a tag doesn't have a field in the case class then it will be dropped. 
 Please also note that **the case class field order doesn't matter as long as the field name and the parser tag is in align**!!
 
-#Custom Typesafe MRD parser vs Scodec MRD encoder
+# Custom Typesafe MRD parser vs Scodec MRD encoder
 Recently I started to play with [scodec](https://github.com/scodec/scodec) in my other pet project. After I saw my parser working with 2.12.1 Typelevel compiler I thought it would be cool to implement the same MRD parser with scodec as well to see how my solution works compared to a mature binary parser scala library and vica versa. 
 
 ** Bear in mind that there is more than likely a better and nicer solutions for both of the implementations. If you have suggestions how I could improve them feel free to share!**
  
-##Scodec MRD encoder
+## Scodec MRD encoder
 Sample code:
 ```scala
 val sampleData =
